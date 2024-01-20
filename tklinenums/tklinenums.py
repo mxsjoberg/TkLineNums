@@ -144,7 +144,7 @@ class TkLineNumbers(Canvas):
                 else int(self["width"]) / 2,
                 dlineinfo[1],
                 # text=f" {lineno} {fold_header}" if self.justify != "center" else f"{lineno} {fold_header}",
-                text=f"{fold_header} {lineno} " if self.justify != "center" else f"{fold_header} {lineno}",
+                text=f" {lineno} {fold_header}" if self.justify != "center" else f"{lineno} {fold_header}",
                 anchor={"left": "nw", "right": "ne", "center": "n"}[self.justify],
                 font=self.textwidget.cget("font"),
                 fill=self.foreground_color,
