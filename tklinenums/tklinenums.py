@@ -119,6 +119,24 @@ class TkLineNumbers(Canvas):
         for lineno in range(first_line, last_line + 1):
             # Check if line is elided
             tags: tuple[str] = self.textwidget.tag_names(f"{lineno}.0")
+
+            # TEST
+            
+            start_index = f"{lineno}.0"
+            end_index = f"{lineno}.end"
+            
+            text_length = len(self.textwidget.get(start_index, end_index))
+
+            tags_list = []
+            
+            char_index = 0
+            while char_index < text_length:
+                char_tags = self.textwidget.tag_names(f"{lineno}.{char_index}")        
+                if char_tags and char_tags[0] not in tags_list: tags_list.append(char_tags[0])
+                char_index += 1
+
+            # END TEST
+            
             elide_values: tuple[str] = (
                 self.textwidget.tag_cget(tag, "elide") for tag in tags
             )
@@ -133,7 +151,7 @@ class TkLineNumbers(Canvas):
                 continue
 
             fold_header = " "
-            if "Token.Keyword" in tags: fold_header = "▶" if "folded" in tags else "▼"
+            if "Token.Keyword" in tags_list and "Token.Name.Function" in tags_list: fold_header = "▶" if "folded" in tags else "▼"
 
             # Create the line number
             self.create_text(
